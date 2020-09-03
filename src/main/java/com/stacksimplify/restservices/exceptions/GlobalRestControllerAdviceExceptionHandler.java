@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GlobalRestControllerAdviceExceptionHandler {
     @ExceptionHandler(UserNameNotFoundException.class)
     @ResponseStatus(HttpStatus.NOT_FOUND)

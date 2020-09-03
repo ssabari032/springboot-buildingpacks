@@ -22,12 +22,14 @@ import java.util.Optional;
 
 @RestController
 @Validated
+@RequestMapping("/Users")
 public class UserController {
     //Autowired the UserServices;
     @Autowired
     private UserService userService;
 
-    @GetMapping ("/Users")
+    @GetMapping
+    //@RequestMapping(value="/Users",method = RequestMethod.GET)
     public List<User> getAllUsers(){
         return userService.getAllUsers();
     }
@@ -35,7 +37,8 @@ public class UserController {
     //Create User
     //@RequestBody Annotation
     //@PostMapping Annotation
-    @PostMapping("/Users")
+    @PostMapping
+    //@RequestMapping(value="/Users",method = RequestMethod.POST)
     public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder){
         try {
             userService.createUsers(user);
@@ -50,7 +53,8 @@ public class UserController {
 
     //Get user by id
     // @PathVariable
-    @GetMapping("/Users/{id}")
+    @GetMapping("/{id}")
+    //@RequestMapping(value="/Users/{id}",method = RequestMethod.GET)
     public Optional<User> getUserById(@PathVariable("id") @Min(1) Long id) {
         try {
             return userService.getUserById(id);
@@ -60,7 +64,8 @@ public class UserController {
     }
 
     //update user ById
-    @PutMapping("/Users/{id}")
+    @PutMapping("/{id}")
+    //@RequestMapping(value="/Users/{id}",method = RequestMethod.PUT)
     public User updateUserById(@PathVariable("id") Long id, @RequestBody User user){
         try {
             return userService.updateUser(id, user);
@@ -71,14 +76,16 @@ public class UserController {
     }
 
     //Delete user By Id
-    @DeleteMapping("/Users/{id}")
+    @DeleteMapping("/{id}")
+    //@RequestMapping(value="/Users/{id}",method = RequestMethod.DELETE)
     public String deleteUserById(@PathVariable("id") Long id){
         return userService.deleteUserById(id);
     }
 
     //find by username
     //Get Username with ExceptionHandler
-    @GetMapping("/Users/ByUsername/{username}")
+    @GetMapping("/ByUsername/{username}")
+    //@RequestMapping(value="/Users",method = RequestMethod.GET)
     public User findByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
             User user = userService.findByUsername(username);
             if(user == null){

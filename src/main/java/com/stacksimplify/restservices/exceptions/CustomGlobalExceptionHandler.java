@@ -13,7 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 import java.util.Date;
 
-//@ControllerAdvice
+@ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
     //private static final Long serialVersionUID =1L;
     //MethodArgumentNotValidException
@@ -42,5 +42,13 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
         CustomErrorInfo customErrorInfo = new CustomErrorInfo(new Date(),ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(customErrorInfo,HttpStatus.BAD_REQUEST);
     }
+
+    @ExceptionHandler({UserNotFoundException.class})
+    public final ResponseEntity<Object> handleUserNotFoundException(UserNotFoundException ex, WebRequest request){
+        CustomErrorInfo customErrorInfo= new CustomErrorInfo(new Date(), ex.getMessage(),request.getDescription(false));
+        return new ResponseEntity<>(customErrorInfo,HttpStatus.NOT_FOUND);
+    }
+
+
 
 }
