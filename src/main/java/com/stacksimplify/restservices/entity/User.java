@@ -2,6 +2,8 @@ package com.stacksimplify.restservices.entity;
 
 //import org.springframework.hateoas.ResourceSupport;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -12,6 +14,7 @@ import java.util.List;
 //Entity
 @Entity
 @Table(name = "user")
+//@JsonIgnoreProperties({"firstname","lastname"})
 public class User extends RepresentationModel<User> {
     @Id
     @GeneratedValue
@@ -34,6 +37,7 @@ public class User extends RepresentationModel<User> {
     private String role;
 
     @Column(name = "SSN", length = 50, nullable = false, unique = true)
+  //  @JsonIgnore
     private String ssn;
 
     @OneToMany(mappedBy = "user")
