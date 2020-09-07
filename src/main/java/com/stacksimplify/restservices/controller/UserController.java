@@ -43,7 +43,7 @@ public class UserController {
         try {
             userService.createUsers(user);
             HttpHeaders headers= new HttpHeaders();
-            headers.setLocation(builder.path("/Users/{id}").buildAndExpand(user.getId()).toUri());
+            headers.setLocation(builder.path("/Users/{id}").buildAndExpand(user.getUsername()).toUri());
             return new ResponseEntity<>(headers,HttpStatus.CREATED);
         }
         catch(UserExistsException ex){
@@ -76,7 +76,7 @@ public class UserController {
     }
 
     //Delete user By Id
-    @DeleteMapping("/{id}")
+    @DeleteMapping("{id}")
     //@RequestMapping(value="/Users/{id}",method = RequestMethod.DELETE)
     public String deleteUserById(@PathVariable("id") Long id){
         return userService.deleteUserById(id);
