@@ -2,6 +2,7 @@ package com.stacksimplify.restservices.entity;
 
 //import org.springframework.hateoas.ResourceSupport;
 
+import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.hateoas.RepresentationModel;
@@ -15,6 +16,7 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({"firstname","lastname"})
+@JsonFilter(value = "userFilter")
 public class User extends RepresentationModel<User> {
     @Id
     @GeneratedValue
