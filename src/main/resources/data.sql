@@ -7,3 +7,8 @@ insert into orders values( 2003, 'order13', 101);
 insert into orders values( 2004, 'order21', 102);
 insert into orders values( 2005, 'order22', 102);
 insert into orders values( 2006, 'order31', 103);
+insert into employee values(101,'DevOps',curDate(),'9.30am','6.30pm','ssabari',10000);
+insert into employee values(102,'DevOps',curDate(),'9.30am','6.30pm','ssabari1',20000);
+insert into employee values(103,'DevOps',curDate(),'9.30am','6.30pm','ssabari2',30000);
+insert into employee values(104,'DevOps',curDate(),'9.30am','6.30pm','ssabari3',40000);
+insert into employee values(105,'DevOps',curDate(),'9.30am','6.30pm','ssabari4',50000);
