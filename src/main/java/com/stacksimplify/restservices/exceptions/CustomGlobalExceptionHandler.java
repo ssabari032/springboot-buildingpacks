@@ -1,6 +1,5 @@
 package com.stacksimplify.restservices.exceptions;
-
-import org.hibernate.exception.ConstraintViolationException;
+import javax.validation.ConstraintViolationException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -38,7 +37,7 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
     }
 
     @ExceptionHandler(ConstraintViolationException.class)
-        public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request){
+    public final ResponseEntity<Object> handleConstraintViolationException(ConstraintViolationException ex, WebRequest request){
         CustomErrorInfo customErrorInfo = new CustomErrorInfo(new Date(),ex.getMessage(),request.getDescription(false));
         return new ResponseEntity<>(customErrorInfo,HttpStatus.BAD_REQUEST);
     }

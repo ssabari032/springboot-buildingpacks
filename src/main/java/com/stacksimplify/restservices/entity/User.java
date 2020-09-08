@@ -5,6 +5,7 @@ package com.stacksimplify.restservices.entity;
 import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonView;
 import org.springframework.hateoas.RepresentationModel;
 
 import javax.persistence.*;
@@ -16,33 +17,39 @@ import java.util.List;
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({"firstname","lastname"})
-@JsonFilter(value = "userFilter")
+//@JsonFilter(value = "userFilter")
 public class User extends RepresentationModel<User> {
     @Id
     @GeneratedValue
+    @JsonView(Views.External.class)
     private Long userid;
-
+    @JsonView(Views.External.class)
     @Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
     @NotEmpty(message = "Username is Mandatory field. Please provide username")
     private String username;
+    @JsonView(Views.External.class)
     @NotEmpty(message = "FirstName is Mandatory field. Please provide FirstName")
     @Size(min=2,message="FirstName should have atleast 2 characters")
     @Column(name = "FIRST_NAME", length = 50, nullable = false)
     private String firstname;
+    @JsonView(Views.External.class)
     @NotEmpty(message = "LastName is Mandatory field. Please provide LastName")
     @Column(name = "LAST_NAME", length = 50, nullable = false)
     private String lastname;
+    @JsonView(Views.External.class)
     @NotEmpty(message = "Username is Mandatory field. Please provide Email")
     @Column(name = "EMAIL_ADDRESS", length = 50, nullable = false)
     private String email;
+    @JsonView(Views.Internal.class)
     @Column(name = "ROLE", length = 50, nullable = false)
     private String role;
-
+    @JsonView(Views.Internal.class)
     @Column(name = "SSN", length = 50, nullable = false, unique = true)
   //  @JsonIgnore
     private String ssn;
 
     @OneToMany(mappedBy = "user")
+    @JsonView(Views.Internal.class)
     private List<Order> orders;
     // No Argument Constructor
     public User(){
