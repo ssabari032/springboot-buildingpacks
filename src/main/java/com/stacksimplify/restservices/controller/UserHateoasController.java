@@ -9,15 +9,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
-import org.springframework.hateoas.server.mvc.ControllerLinkBuilder;
-import org.springframework.hateoas.server.mvc.ControllerLinkRelationProvider;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import sun.awt.image.ImageWatched;
 
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -43,8 +40,7 @@ public class UserHateoasController {
         Long userid= user.getUserid();
         Link selfLink= WebMvcLinkBuilder.linkTo(this.getClass()).slash(userid).withSelfRel();
         user.add(selfLink);
-        EntityModel<User> finalResource = new EntityModel<User>(user);
-        return finalResource;
+        return new EntityModel<>(user);
     }
 
     @GetMapping()
@@ -61,8 +57,7 @@ public class UserHateoasController {
            user.add(orderLinks);
        }
        Link selfLinkGetAllUser= WebMvcLinkBuilder.linkTo(this.getClass()).withSelfRel();
-       CollectionModel<User> finalResource = new CollectionModel<User>(allusers,selfLinkGetAllUser);
-       return finalResource;
+       return new CollectionModel<>(allusers,selfLinkGetAllUser);
     }
 
 }
