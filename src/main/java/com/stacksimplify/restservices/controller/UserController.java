@@ -34,7 +34,7 @@ public class UserController {
     private UserService userService;
 
     @ApiOperation(value="Retrieve all the users")
-    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping()
     //@RequestMapping(value="/Users",method = RequestMethod.GET)
     public List<User> getAllUsers(){
         return userService.getAllUsers();
