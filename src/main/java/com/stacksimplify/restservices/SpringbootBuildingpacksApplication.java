@@ -17,13 +17,13 @@ public class SpringbootBuildingpacksApplication {
     }
     @Bean
     public LocaleResolver localeResolver(){
-        AcceptHeaderLocaleResolver localeResolver= new AcceptHeaderLocaleResolver();
+       AcceptHeaderLocaleResolver localeResolver= new AcceptHeaderLocaleResolver();
         localeResolver.setDefaultLocale(Locale.US);
         return localeResolver;
     }
 
     public ResourceBundleMessageSource messageSource(){
-        ResourceBundleMessageSource messageSource=new ResourceBundleMessageSource();
+       ResourceBundleMessageSource messageSource=new ResourceBundleMessageSource();
         messageSource.setBasename("messages");
         return messageSource;
     }
