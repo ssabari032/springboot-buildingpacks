@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonFilter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonView;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.RepresentationModel;
 
@@ -15,22 +17,27 @@ import javax.validation.constraints.Size;
 import java.util.List;
 
 //Entity
+@ApiModel(description = "This model is to create a user")
 @Entity
 @Table(name = "user")
 //@JsonIgnoreProperties({"firstname","lastname"})
 //@JsonFilter(value = "userFilter")
 public class User extends RepresentationModel<User> {
+    @ApiModelProperty(notes="Auto Generated Value", required = true,position = 1)
     @Id
     @GeneratedValue
     @JsonView(Views.External.class)
     private Long userid;
+
+    @ApiModelProperty(notes="UserName should be in formate flname",example = "sperumal", position = 2)
     @JsonView(Views.External.class)
     @Column(name = "USER_NAME", length = 50, nullable = false, unique = true)
     @NotEmpty(message = "Username is Mandatory field. Please provide username")
     private String username;
+    @ApiModelProperty(notes = "First name of the User.", example = "sabarinathan", position = 3)
     @JsonView(Views.External.class)
     @NotEmpty(message = "FirstName is Mandatory field. Please provide FirstName")
-    @Size(min=2,message="FirstName should have atleast 2 characters")
+    @Size(min=2,max = 50, message="FirstName should have atleast 2 characters")
     @Column(name = "FIRST_NAME", length = 50, nullable = false)
     private String firstname;
     @JsonView(Views.External.class)
@@ -44,6 +51,7 @@ public class User extends RepresentationModel<User> {
     @JsonView(Views.Internal.class)
     @Column(name = "ROLE", length = 50, nullable = false)
     private String role;
+    @ApiModelProperty(notes = "SSN of the User.", example = "SSN1010", required = true, position = 4)
     @JsonView(Views.Internal.class)
     @Column(name = "SSN", length = 50, nullable = false, unique = true)
   //  @JsonIgnore
