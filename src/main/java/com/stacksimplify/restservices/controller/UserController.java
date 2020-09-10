@@ -5,9 +5,13 @@ import com.stacksimplify.restservices.exceptions.UserExistsException;
 import com.stacksimplify.restservices.exceptions.UserNameNotFoundException;
 import com.stacksimplify.restservices.exceptions.UserNotFoundException;
 import com.stacksimplify.restservices.services.UserService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -22,13 +26,15 @@ import java.util.Optional;
 
 @RestController
 @Validated
+@Api(tags = "User Management RESTful Services",value = "User Controller", description = "Controller fo User managment")
 @RequestMapping("/Users")
 public class UserController {
     //Autowired the UserServices;
     @Autowired
     private UserService userService;
 
-    @GetMapping
+    @ApiOperation(value="Retrieve all the users")
+    @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     //@RequestMapping(value="/Users",method = RequestMethod.GET)
     public List<User> getAllUsers(){
         return userService.getAllUsers();
@@ -37,9 +43,10 @@ public class UserController {
     //Create User
     //@RequestBody Annotation
     //@PostMapping Annotation
+    @ApiOperation(value="Create a User")
     @PostMapping
     //@RequestMapping(value="/Users",method = RequestMethod.POST)
-    public ResponseEntity<Void> createUser(@Valid @RequestBody User user, UriComponentsBuilder builder){
+    public ResponseEntity<Void> createUser(@ApiParam(value = "User information for new user to be created") @Valid @RequestBody User user, UriComponentsBuilder builder){
         try {
             userService.createUsers(user);
             HttpHeaders headers= new HttpHeaders();
@@ -53,17 +60,20 @@ public class UserController {
 
     //Get user by id
     // @PathVariable
+    @ApiOperation(value="Retrieve user by user id")
     @GetMapping("/{id}")
     //@RequestMapping(value="/Users/{id}",method = RequestMethod.GET)
-    public Optional<User> getUserById(@PathVariable("id") @Min(1) Long id) {
+    public User getUserById(@PathVariable("id") @Min(1) Long id) {
         try {
-            return userService.getUserById(id);
+            Optional<User> user = userService.getUserById(id);
+            return user.get();
         }catch(UserNotFoundException ex){
             throw new ResponseStatusException(HttpStatus.NOT_FOUND,ex.getMessage());
         }
     }
 
     //update user ById
+    @ApiOperation(value="Update the users by userId")
     @PutMapping("/{id}")
     //@RequestMapping(value="/Users/{id}",method = RequestMethod.PUT)
     public User updateUserById(@PathVariable("id") Long id, @RequestBody User user){
@@ -76,6 +86,7 @@ public class UserController {
     }
 
     //Delete user By Id
+    @ApiOperation(value="Delete the user by userid")
     @DeleteMapping("{id}")
     //@RequestMapping(value="/Users/{id}",method = RequestMethod.DELETE)
     public String deleteUserById(@PathVariable("id") Long id){
@@ -84,6 +95,7 @@ public class UserController {
 
     //find by username
     //Get Username with ExceptionHandler
+    @ApiOperation(value="Retrieve user by username")
     @GetMapping("/ByUsername/{username}")
     //@RequestMapping(value="/Users",method = RequestMethod.GET)
     public User findByUsername(@PathVariable("username") String username) throws UserNameNotFoundException {
